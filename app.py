@@ -1,4 +1,5 @@
 import psycopg2
+from config import *
 from flask import Flask, request, session, g, redirect, \
 	url_for, abort, render_template, flash
 from flask.ext.login import LoginManager
@@ -12,4 +13,11 @@ def main():
 	return render_template('index.html')
 
 if __name__ == '__main__':
+#	conn = psycopg2.connect(
+#		host=host,
+#		password=password,
+#		user=user,
+#		database=database
+	#)
 	app.run()
+
