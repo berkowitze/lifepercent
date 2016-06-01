@@ -1,6 +1,6 @@
 body {
 	font-size: 20px;
-	background-image: url('../Media/bg1.png');
+	background-image: url('../media/bg1.png');
 	font-family: Futura, "Trebuchet MS", Arial, sans-serif;
 }
 
@@ -19,7 +19,7 @@ div.mainsection {
 	padding-right: 30px;
 	padding-top: 5px;
 	padding-bottom: 5px;
-	background-image: url('../Media/bg2.png');
+	background-image: url('../media/bg2.png');
 	width: 70%;
 	min-height: 600px;
 }
@@ -38,13 +38,12 @@ select {
 	background-color: #FFF8DC;
 	border: none;
 	font-size: 18px;
-}
-select.normal {
 	width: 150px;
 }
-select.countryselect {
+
+select#country {
 	margin-bottom: 20px;
-	width: 350px;
+	width: 350px !important;
 }
 
 select.convertorValues {

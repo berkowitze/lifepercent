@@ -41,5 +41,5 @@ var realYearsAlive;
 var arrayTwo = [[" years", " year"], [" months", " month"], [" days"," day"], [" hours", " hour"], [" minutes", " minute"], [" seconds", " second"]]
 var daysInMonth = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
 var saved;
-var monthsOfYear = ['January', 'February', 'March', 'April', 'May', 'June',
-'July', 'August', 'September', 'October', 'November', 'December']
+var monthsOfYear = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+
