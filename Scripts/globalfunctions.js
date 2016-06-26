@@ -1,14 +1,5 @@
-function local() {
-	if (document.URL == 'http://www.lifepercent.com' || document.URL == 'http://lifepercent.com') {
-		$('#edit').href = 'http://www.lifepercent.com';
-	}
-}
-
-function expectancyAndAgeDetermination(impact) {
+function expectancyAndAgeDetermination(impact=0) {
 	getAndSetFormVars();
-	if (impact == undefined) {
-		impact = 0;
-	}
 	d = new Date();
 	currentYear = d.getFullYear();
 	currentMonth = d.getMonth();
@@ -92,6 +83,10 @@ function dOBPopulate() {
 	yearOfBirth();
 	dayOfBirth(31);
 	monthOfBirth();
+}
+
+function getDropdown() {
+	$('div#country-dropdown').load('templates/country-dropdown.html');
 }
 
 function onloadFunction() {
