@@ -117,6 +117,10 @@ h3 {
 	font-size: 120%;
 }
 
+.absolute-hide {
+	display: none !important;
+}
+
 .noselect {
     -webkit-touch-callout: none;
     -webkit-user-select: none;
@@ -133,4 +137,9 @@ h3 {
 	color: darkgrey;
 	font-size: 70%;
 	margin-bottom: none;
+}
+
+a#customizeExpectancy {
+	font-size: 65%;
+	text-decoration: none;
 }

@@ -1,12 +1,14 @@
-
 function local() {
-	if ((document.URL == 'http://www.lifepercent.com') || (document.URL == 'http://lifepercent.com')) {
-		$('edit').href = 'http://www.lifepercent.com';
+	if (document.URL == 'http://www.lifepercent.com' || document.URL == 'http://lifepercent.com') {
+		$('#edit').href = 'http://www.lifepercent.com';
 	}
 }
 
-function expectancyAndAgeDetermination() {
+function expectancyAndAgeDetermination(impact) {
 	getAndSetFormVars();
+	if (impact == undefined) {
+		impact = 0;
+	}
 	d = new Date();
 	currentYear = d.getFullYear();
 	currentMonth = d.getMonth();
@@ -34,30 +36,19 @@ function expectancyAndAgeDetermination() {
 		slope = (arrayToUse[ageRange + 1] - arrayToUse[ageRange])/5;
 		yIntercept = arrayToUse[ageRange] - (slope * (ageRange * 5));
 		lifeExpectancy = slope * realYearsAlive + yIntercept;
+		lifeExpectancy += impact;
 	}
 //Determining Main Return Number
 	msPerLife = lifeExpectancy * msPerYear;
 	percentLifePassed = msAlive * 100 / msPerLife;
 }
 
-function $(arg) {
-	return document.getElementById(arg);
-}
-
-function $$(arg) {
-	return document.getElementsByClassName(arg);
-}
-
-function $$$(arg) {
-	return document.createElement(arg);
-}
-
 function getAndSetFormVars() {
-	yob = parseInt($('yearofbirth').value);
-	mob = parseInt($('monthofbirth').value);
-	dob = parseInt($('dayofbirth').value);
-	gender = parseInt($('genderselect').value);
-	countryValue = parseInt($('country').value);
+	yob = parseInt($('#yearofbirth').val());
+	mob = parseInt($('#monthofbirth').val());
+	dob = parseInt($('#dayofbirth').val());
+	gender = parseInt($('#genderselect').val());
+	countryValue = parseInt($('#country').val());
 	sessionStorage.setItem('yob', yob);
 	sessionStorage.setItem('mob', mob);
 	sessionStorage.setItem('dob', dob);
@@ -66,34 +57,34 @@ function getAndSetFormVars() {
 }
 
 function monthOfBirth() {
-	mOBList = $('monthofbirth');
+	mOBList = $('#monthofbirth');
 	for (i = 0; i < monthsOfYear.length; i++) {
-		option = $$$('option');
-		option.value = i;
-		option.text = monthsOfYear[i];
-		mOBList.add(option)
+		option = $('<option>');
+		option.val(i);
+		option.text(monthsOfYear[i]);
+		mOBList.append(option);
 	}
 	dayOfBirth(mOBList.value)
 }
 
 function dayOfBirth(days) {
-	dOBList = $('dayofbirth');
+	dOBList = $('#dayofbirth');
 	for (i = 1; i < (days + 1); i++) {
-		option = $$$('option');
-		option.value = i;
-		option.text = i;
-		dOBList.add(option);
+		option = $('<option>');
+		option.val(i);
+		option.text(i);
+		dOBList.append(option);
 	}
-	dOBList.selectedIndex = saved;
+	dOBList.get(0).selectedIndex = saved;
 }
 
 function yearOfBirth() {
-	yOBList = $('yearofbirth');
+	yOBList = $('#yearofbirth');
 	for (i = (new Date().getFullYear()); i > (new Date().getFullYear()) - 105; i--) {
-		option = $$$('option');
-		option.value = i;
-		option.text = i;
-		yOBList.add(option);
+		option = $('<option>');
+		option.val(i);
+		option.text(i);
+		yOBList.append(option);
 	}
 }
 
@@ -104,8 +95,13 @@ function dOBPopulate() {
 }
 
 function onloadFunction() {
-	selectList = [['yob', 'yearofbirth'], ['mob', 'monthofbirth'],
+	if (document.title.indexOf('Personal Info') >= 0) {
+		selectList = [['gender', 'genderselect'], ['countryValue', 'country']];
+	}
+	else {
+		selectList = [['yob', 'yearofbirth'], ['mob', 'monthofbirth'],
 	['dob', 'dayofbirth'], ['gender', 'genderselect'], ['countryValue', 'country']];
+	}
 	z = 0;
 	for (i=0; i <= selectList.length - 1; i++) {
 		key = selectList[i][0];
@@ -113,30 +109,38 @@ function onloadFunction() {
 		storageItem = sessionStorage.getItem(key);
 		if ((storageItem != null) && (!isNaN(parseInt(storageItem)))) {
 			try {
-				$(element).value = storageItem;
+				$('#' + element).val(storageItem);
 				z += 1;
 			}
 			catch (err) {}
 		}
 	}
 	if (z == 5) {
-		if (!document.URL.includes('customize')) {
+		if (document.title != 'Passing Life - Custom Data') {
 			expectancyAndAgeDetermination('Yes');
 		}
 	}
 }
 
 function lETable() {
-	$("learray").innerHTML = "<td>Age</td><td>Life Expectancy</td>";
-	countryValue = parseInt($('country').value);
-	gender = parseInt($('genderselect').value);
+	$('#learray').html('<td>Age</td><td>Life Expectancy</td>');
+	countryValue = parseInt($('#country').val());
+	gender = parseInt($('#genderselect').val());
 	sessionStorage.setItem('countryValue', countryValue);
 	sessionStorage.setItem('gender', gender);
-	try{
+	try {
 		arrayToUse = lEArray[countryValue][gender];
 		for (i = 0; i < arrayToUse.length; i++) {
-			$("learray").innerHTML += "<td>" + 5 * i + "</td><td>" + Number(arrayToUse[i]).toFixed(1) + "</td>";
+			tr = $('<tr>');
+			firstTD = $('<td>');
+			firstTD.text((5 * i).toString());
+			secondTD = $('<td>');
+			secondTD.text(Number(arrayToUse[i]).toFixed(1).toString());
+			tr.append(firstTD, secondTD);
+			$("#learray").append(tr);
 		}
 	}
-	catch(err) {}
+	catch(err) {
+		console.log(err.toString());
+	}
 }

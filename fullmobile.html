@@ -1,26 +1,44 @@
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:fb="http://ogp.me/ns/fb#">
 <head>
-	<title>Passing Life - Data</title>
+	<title>Passing Life</title>
 	<link rel="shortcut icon" href="Media/favicon.ico" />
+	<meta property="og:title"
+	content="See an accurate percentage of your life that has passed."/>
+	<meta property="og:image" content="Media/clock2.jpg">
 	<script src="Scripts/variables.js"></script>
 	<script src="Scripts/arrays.js"></script>
 	<script src="Scripts/globalfunctions.js"></script>
+	<script src="Scripts/fullscript.js"></script>
 	<link rel="stylesheet" type="text/css" href="Styles/style.css">
-	<meta name="Description" content="Displays an accurate percentage of your life that has passed using nationality, age and gender.">
+	<meta name="Description" content="Displays the estimated passed percentage of your life using nationality, age and gender.">
+	<meta name="google-translate-customization" content="5e07c945738438f-1b7efd0d14856663-g7d03c12952eb85cd-13">
+	<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-56257317-1', 'auto');
+  ga('send', 'pageview');
+
+	</script>
 </head>
-<body onload="onloadFunction(); lETable();">
-	<div class="mainsection">
-		<nav class="nav">
+<body onload="onloadFunction(); local(); setInterval(function() {expectancyAndAgeDetermination('Yes')}, 50)">
+	<div class="mainsection textaligncenter">
+		<nav class="nav"> <!--Navigation bar-->
 			<ul class="navitems">
-				<a class="navitem" href="home.html"><li>The Calculator</li></a>
-				<a class="navitem" href="daily.html"><li>Customize</li></a>
-				<a class="navitem" href="data.html"><li>Data</li></a>
+				<a id="edit" class="navitem navitemleft" href="index.html"><li>The Calculator</li></a>
+				<a class="navitem" href="customize.html"><li>Customize</li></a>
+				<a class="navitem" href="showdata.html"><li>Personal Info</li></a>
 			</ul>
 		</nav>
+		<h1 class="title" id="test">Percent of your life that has passed</h1>
+		<p class="warning">Warning: This may be <strong>depressing</strong>.</p>
 		<div class="center">
-			<h3>Enter your country of birth and gender to view your life expectancy chart.<br /></h3>
-			<select autofocus onchange="lETable()" id="country" class="countryselect normal"><!--Country of birth-->
+		<div class="fb-share-button" data-href="http://lifepercent.com" data-layout="icon"></div>
+			<select autofocus id="country" class="countryselect normal" onchange="getAndSetFormVars()"><!--Country of birth-->
 				<option value="NaN">Country of Birth</option>
 				<optgroup label="Recommended Countries">
 					<option value="179">United States</option>
@@ -214,13 +232,37 @@
 					<option value="186">Zambia</option>
 					<option value="187">Zimbabwe</option>
 				</optgroup>
-			</select><br />
-			<select onchange="lETable()" id="genderselect" class="normal"><!--Gender-->
+			</select>
+			<br/>
+			<div class="center">
+				<select class="normal" id="monthofbirth" onchange="getAndSetFormVars()"><!--Month born-->
+					<option>Month</option>
+					<option disabled="disabled" value="NaN"></option>
+				</select>
+
+				<select id="dayofbirth" class="normal" onchange="getAndSetFormVars(); yearOfBirth()"><!--Day of month born-->
+					<option>Day</option>
+					<option disabled="disabled" value="NaN"></option>
+				</select>
+
+				<select id="yearofbirth" class="normal" onchange="getAndSetFormVars()"><!--Year born-->
+					<option>Year</option>
+					<option disabled="disabled" value="NaN"></option>
+				
+				</select><br/><br/>
+			</div>
+			<select id="genderselect" class="normal" onchange="getAndSetFormVars()"><!--Gender-->
 				<option value="NaN">Gender</option>
 				<option value="0">Male</option>
 				<option value="1">Female</option>
 			</select>
-			<table id="learray"><td>Age</td><td>Life Expectancy</td></table>
+		</div>
+		<p id="percentlifepassed" class="noselect"></p>
+		<p id="age"></p>
+		<div class="noselect" id="moreinfo"></div>
+		<div id="percentlifeworking"></div> 
+		<a href='mobile.html'>Click here to go to mobile site</a>
 	</div>
+	<script type="text/javascript">dayOfBirth(31); monthOfBirth(); yearOfBirth();</script>
 </body>
 </html>

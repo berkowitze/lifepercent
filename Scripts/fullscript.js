@@ -24,17 +24,25 @@ function mainFunction() {
 				text = aboveLE
 			}
 			else if (!isNaN(gender + countryValue + realYearsAlive)) {
-				text = Number(percentLifePassed).toFixed(9) + "% of your life has passed"; 
+				console.log($('#customizeExpectancy'));
+				if ($("#customizeExpectancy").hasClass('absolute-hide')) {
+					$("#customizeExpectancy").removeClass('absolute-hide');
+				}
+				text = Number(percentLifePassed).toFixed(9) + '% of your life has passed';
 			}
 			else {
 				text = dOBError
 			}
 		}
 		catch(err) {
-				text = dOBError
+			text = dOBError
 		}
-		try {$("percentlifepassed").innerHTML = text;}
-		catch(err) {}
+		try {
+			$('#percentlifepassed').text(text);
+		}
+		catch(err) {
+			console.log('err');
+		}
 
 		if ((currentDay - dob) < 0) {
 			monthsAlive = monthsAlive - 1;
@@ -97,11 +105,15 @@ function mainFunction() {
 			moreInfo = "<b>More information</b>:<br/>" + age;
 		}
 		else {
-			moreInfo = "<b>More Information</b>:<br/>" + age + "<br/>" + writeLE +
-			 " years<br/>Every second you live, your life expectancy increases by "
-			+ Number(slope).toFixed(2) + " seconds<br/>";
+			moreInfo = "<b>More Information</b>:<br/>" + age + "<br/>" + writeLE;
+			moreInfo += ' years<br/>Every second you live, your life expectancy increases by ';
+			moreInfo += Number(slope).toFixed(2) + " seconds<br/>";
 		}
-		try{$("moreinfo").innerHTML = moreInfo;}
-		catch(err){}
+		try {
+			$('#moreinfo').html(moreInfo);
+		}
+		catch(err){
+
+		}
 	//Done!
 }

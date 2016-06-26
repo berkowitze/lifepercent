@@ -1,23 +1,45 @@
-var secPerDay = 86400;
-var averageDaysPerMonth = 30.4375;
-
-function formsOnChange() {
-	expectancyAndAgeDetermination();
-	button = $('generate');
+function formsOnChange(impact) {
+	expectancyAndAgeDetermination(impact);
+	button = $('#generate');
 	if ((isNaN(lifeExpectancy)) || (lifeExpectancy == dOBError)) {
-		button.disabled = true;
-		button.innerHTML = 'Complete form above';
-		removeLastNodes($$('activityObject'), 'T');
+		button.prop('disabled', true);
+		button.text('Complete form above');
+		removeLastNodes();
 	}
 	else {
-		button.disabled = false;
-		button.innerHTML = 'Done';
+		button.prop('disabled', false);
+		button.text('Done');
 	}
 	if ((lifeExpectancy != dOBError) && (!isNaN(lifeExpectancy))) {
-		$('lifeexpectancy').innerHTML = 'Life expectancy: ' + Number(lifeExpectancy).toFixed(2);
+		$('#lifeexpectancy').html('');
+		$('#lifeexpectancy').append('Life expectancy: ', Number(lifeExpectancy).toFixed(2));
+		if (impact > 0) {
+			p1 = '<br/>Your activities increase your life expectancy by ';
+			p2 = $('<green>');
+			p2.text(impact.toFixed(2));
+			p3 = ' years';
+			$('lifeexpectancy').append(p1, p2, p3);
+		}
+		else if (impact < 0) {
+			p1 = '<br/>Your activities decrease your life expectancy by ';
+			p2 = $('<red>');
+			p2.text(impact.toFixed(2) * -1);
+			p3 = ' years.';
+			$('#lifeexpectancy').append(p1, p2, p3);
+		}
+		else if (impact == 0) {
+			p1 = '<br/>Calculator did not detect any life expectancy changes based on your inputs.';
+			$('#lifeexpectancy').append(p1);
+		}
+		else {
+
+		}
+		if (!isNaN(impact)) {
+			$('#lifeexpectancy').append('<br/><a href="index.html">Return to main page</a>')
+		}
 	}
 	else {
-		$('lifeexpectancy').innerHTML = ' <br/>';
+		$('#lifeexpectancy').html('<br/>');
 	}
 }
 
@@ -31,8 +53,8 @@ function lineAddedOrRemoved() {
 
 function dayBreakdownChart() {
 	//Triggers: dayBreakdownChart
-	$('daychart').innerHTML = chartHTML;
-	ctx = $('chart').getContext('2d');
+	$('#daychart').html(chartHTML);;
+	ctx = $('#chart').get(0).getContext('2d');
 	pieChart = new Chart(ctx).Pie(dayDataSets, {animationSteps: 50, segmentShowStroke: false});
 }
 
@@ -41,7 +63,7 @@ function addInputLine() {
 	if (calculateRemainingTime() > 0) {
 		lineAddedOrRemoved();
 		inputLine = createInputLine();
-		$('customdata').appendChild(inputLine);
+		$('#customdata').append(inputLine);
 		selectLast();
 	}
 	else {
@@ -63,11 +85,11 @@ function generateDayData() {
 		generateData();
 		return;
 	}
-	removeLastNodes($$('activityObject'), 'T');
+	removeLastNodes();
 	newRemainingHours = remainingTime/3600;
 	if (newRemainingHours > 1) {
 		remainingHours = newRemainingHours;
-		remainingLabel = 'Remaining Hours:'
+		remainingLabel = 'Remaining Hours:';
 	}
 	else if (newRemainingHours > 0) {
 		remainingHours = newRemainingHours*60;
@@ -81,10 +103,10 @@ function generateDayData() {
 	});
 	remainingLabelString = remainingLabel + ' ' + Number(remainingHours).toFixed(2);
 	if (remainingHours != 0) {
-		$('remaininglabel').innerHTML = remainingLabelString;
+		$('#remaininglabel').text(remainingLabelString);
 	}
 	else {
-		$('remaininglabel').innerHTML = '';
+		$('#remaininglabel').html('');
 	}
 
 	timeDict = returnTimeDict();
@@ -100,31 +122,29 @@ function generateDayData() {
 	}
 }
 
-function removeLastNodes(list, tagFilter) {
+function removeLastNodes() {
 	//Triggers: GenerateData; generateDayData
-	for (var i=0; i <= list.length - 1; i++) {
-		nodes = list[i].childNodes;
-		lastNode = nodes[nodes.length-1];
-		if (lastNode.tagName == tagFilter) {
-			lastNode.remove();
-		}
+	activityObjectList = $('.activityObject').get();
+	for (i=0; i<=activityObjectList.length-1; i++) {
+		childrenList = $('.activityObject').get(i);
+		for (m=activityObjectList[i].childNodes.length-1; m>=7; m--) {
+			activityObjectList[i].childNodes[m].remove();
+		}	
 	}
 }
 
 function clean() {
 	//Triggers: generateData
-	for (var i=$$('activity').length-1; i>=0; i--) {
-		activityList = $$('activity');
-		timeList = $$('activityTimeValue');
+	for (var i=$('.activity').length-1; i>=0; i--) {
+		activityList = $('.activity');
+		timeList = $('.activityTimeValue');
 
-		if (timeList[i].value == '') {
-			removeLine(activityList[i]);
+		if (timeList.eq(i).val() == '') {
+			removeLine(activityList.get(i));
 		}
-
-		else if (activityList[i].value == '') {
-			activityList[i].className += ' error';
+		else if (activityList.eq(i).val() == '') {
+			activityList.eq(i).addClass('error');
 		}
-
 		else {}
 
 	}
@@ -137,21 +157,24 @@ function generateData() {
 		updateGenerator > remainder <= 0;
 		generateDayData > remainder <= 0
 	*/
+	if (calculateRemainingTime() > 0) {
+		return;
+	}
 	clean();
-	removeLastNodes($$('activityObject'), 'T');
+	expectancyAndAgeDetermination();
+	removeLastNodes();
 	remainder = calculateRemainingTime();
-	if (remainder != 0) {
+	if (remainder > 0) {
 		removeOverflow(remainder);
 	}
 
 	newDuration = secPerDay;
-	for (var i=0; i <= dayDataSets.length - 1; i++) {
-		newDuration -= Number(dayDataSets[i]['value']) * 3600;
-	}
-	$('daychart').innerHTML = '';
-	if (calculateRemainingTime() == 0) {
-		$('remaininglabel').innerHTML = '';
-	}
+	dayDataSets.map(function(dataSet){
+		newDuration -= dataSet.value;
+	});
+
+	$('#daychart').html('');
+	$('#remaininglabel').html('');
 	if (isNaN(lifeExpectancy)) {
 		formsOnChange();
 		return;
@@ -173,11 +196,12 @@ function generateData() {
 		}
 		itemPercentOfLife = Number(originalValue/lifeExpectancy * 100).toFixed(2)
 		str = '\t\t' + worded_value + ' (' + itemPercentOfLife + '%) of your life';
-		b = $$$('t');
-		b.className = 'yearsoflife';
-		c = document.createTextNode(str);
-		b.appendChild(c);
-		timeDict[i]['parentElement'].appendChild(b);
+		b = $('<t class="yearsoflife">');
+		b.text(str);
+		$(timeDict[i]['parentElement']).append(b);
+	}
+	if ($('#allowActivityImpact').prop('checked')) {
+		calculateHealth(timeDict);
 	}
 }
 
@@ -185,8 +209,8 @@ function ifEnterContinue(arg) {
 	//Triggers: inputCheck; convertorDropdown keydown
 	if (arg.keyCode == 13) {
 		if (calculateRemainingTime() <= 0) {
-			$('addInputLine').disabled = true;
-			if ($('generate').disabled == false) {
+			$('#addInputLine').prop('disabled', true);
+			if (!$('#generate').prop('disabled')) {
 				generateData();
 			}
 		}
@@ -198,14 +222,13 @@ function ifEnterContinue(arg) {
 
 function inputCheck(arg) {
 	//Triggers: activityTimeValue Keyup
-	if ((!isNaN(lifeExpectancy)) && (lifeExpectancy != dOBError)) {
-		$('addInputLine').disabled = false;
+	if (calculateRemainingTime() > 0) {
+		$('#addInputLine').prop('disabled', false);
 	}
-	element = arg.path[0];
-	if (isNaN(parseInt(element.value)) || parseInt(element.value) <= 0) {
-		element.value = '';
+	element = $(arg.target);
+	if (element.val() != '' && element.siblings('input').val() != '') {
+		ifEnterContinue(arg);
 	}
-	ifEnterContinue(arg);
 }
 
 function toTitleCase(str) {
@@ -236,52 +259,55 @@ function rainbow(numOfSteps, step) {
 
 function removeLine(arg) {
 	//Triggers: clean > timeList[i] == ''; minus button pressed
-	if ($$('activity').length != 1) {
+	if ($('.activity').length != 1) {
 		try{arg.parentNode.remove();}
 		catch(err){arg.path[1].remove();}
 	}
 	else {
-		arg.path[1].childNodes[1].value = '';
-		arg.path[1].childNodes[3].value = '';
-		arg.path[1].childNodes[4].selectedIndex = 0;
+		clearFirstLine();
 	}
 	lineAddedOrRemoved();
-	activityList = $$('activity');
+	activityList = $('.activity');
 	if (activity[activityList.length-1] == '') {
 		selectLast();
 	}
 }
 
+function clearFirstLine() {
+	//Triggers: removeLine > activityList.length == 1
+	line = $('.activityObject').first();
+	line.children('input').val('');
+	line.children('select').get(0).selectedIndex = 1;
+}
+
 function calculateRemainingTime() {
 	//Triggers: Everywhere
 	remainingSeconds = secPerDay;
-	timeValues = $$('activityTimeValue');
-	convertorValues = $$('convertorValues');
-	for (var i = 0; i <= timeValues.length - 1; i++) {
-		if (convertorValues[i].value == 'Hours') {
-			secondsValue = Number(timeValues[i].value) * 3600;
+	timeValues = $('.activityTimeValue');
+	convertorValues = $('.convertorValues');
+	timeValues.map(function(l){
+		timeVal = timeValues.eq(l);
+		convertorVal = convertorValues.eq(l);
+		if (convertorVal.val() == 'Hours') {
+			remainingSeconds -= timeVal.val() * 3600;
 		}
 		else {
-			secondsValue = Number(timeValues[i].value) * 60;
+			remainingSeconds -= timeVal.val() * 60;
 		}
-		remainingSeconds -= secondsValue;
-	}
+	});
 	return remainingSeconds;
 }
 
 function activityCheck(arg) {
-	//Triggers: activity input keydown
-	element = arg.path[0];
-	element.className = 'activity';
 }
 
 function removeOverflow(remainder) {
 	//Triggers: generateData > remainder != 0
 	timeDict = returnTimeDict();
 	maxObject = timeDict.pop();
-	maxElement = maxObject['maxElement'];
-	maxValue = maxObject['maxValue'];
-	maxConvertor = maxObject['maxConvertor'];
+	maxElement = maxObject.maxElement;
+	maxValue = maxObject.maxValue;
+	maxConvertor = maxObject.maxConvertor;
 	if (maxConvertor == 'Hours') {
 		maxValue /= 60
 		remainder /= 3600;
@@ -295,73 +321,55 @@ function removeOverflow(remainder) {
 
 function selectLast() {
 	//Triggers: addInputLine > remainder >=0; removeLine > last activity == ''
-	q = $$('activity');
-	final_item = q[q.length - 1];
-	final_item.select()
+	q = $('.activity').last().focus();
 }
 
 function createInputLine() {
 	//addInputLine > remainder > 0
-	activityObject = $$$("p");
-	activityObject.className = 'activityObject'
-	activityInput = $$$("input");
-	activityInput.placeholder = 'running';
-	activityInput.addEventListener("keydown", activityCheck)
-	activityInput.className = 'activity'
+	activityObject = $('<p class="activityObject">');
+	activityInput = $('<input class="activity">');
+	activityInput.attr('placeholder', 'running');
+	activityInput.keydown(activityCheck);
 
-	timeValueInput = $$$("input");
-	timeValueInput.type = 'number';
-	timeValueInput.className = 'activityTimeValue';
-	timeValueInput.addEventListener("keyup", inputCheck);
-	timeValueInput.placeholder = '2';
+	timeValueInput = $('<input type="number" class="activityTimeValue">');
+	timeValueInput.keyup(inputCheck);
+	timeValueInput.attr('placeholder', '2');
 
-	convertorDropdown = $$$("select");
-	convertorDropdown.className = 'convertorValues';
-	convertorDropdown.addEventListener('keydown', ifEnterContinue)
-	option1 = $$$("option");
-	option1.value = 'Hours';
-	option1.text = 'Hours';
+	convertorDropdown = $('<select class="convertorValues">');
+	convertorDropdown.keydown(ifEnterContinue);
+	option1 = $('<option>');
+	option1.val('Hours');
+	option1.text('Hours');
 
-	option2 = $$$("option");
-	option2.value = 'Minutes';
-	option2.text = 'Minutes';
+	option2 = $('<option>');
+	option2.val('Minutes');
+	option2.text('Minutes');
 
-	convertorDropdown.add(option1);
-	convertorDropdown.add(option2);
+	convertorDropdown.append(option1, option2);
 
-	removeLineButton = $$$("button");
-	removeLineButton.className = 'removelinebutton'
-	emDash = document.createTextNode("\u2014");
-	removeLineButton.appendChild(emDash);
-	removeLineButton.addEventListener('click', removeLine);
+	removeLineButton = $('<button class="removelinebutton">');
+	removeLineButton.text('\u2014');
+	removeLineButton.click(removeLine);
 
-	iAmTextNode = document.createTextNode('I am ');
-	forTextNode = document.createTextNode(' for ');
-	perDayTextNode = document.createTextNode(' per day. ');
-	activityObject.appendChild(iAmTextNode);
-	activityObject.appendChild(activityInput);
-	activityObject.appendChild(forTextNode);
-	activityObject.appendChild(timeValueInput);
-	activityObject.appendChild(convertorDropdown);
-	activityObject.appendChild(perDayTextNode);
-	activityObject.appendChild(removeLineButton);
+	activityObject.append('I am ', activityInput, ' for ',
+		timeValueInput, convertorDropdown, ' per day. ', removeLineButton)
 	
 	return activityObject;
 }
 
 function returnTimeDict() {
 	//Triggers: generateData; generateDayData; removeOverflow
-	timeValues = $$('activityTimeValue');
-	convertorValues = $$('convertorValues');
-	activityList = $$('activity');
+	timeValues = $('.activityTimeValue');
+	convertorValues = $('.convertorValues');
+	activityList = $('.activity');
 	rawValueList = [];
 	dict = [];
 	c = 0;
 	for (var i=0; i <= timeValues.length-1; i++) {
-		activity = toTitleCase(activityList[i].value);
-		timeValue = parseFloat(timeValues[i].value);
-		convertorValue = convertorValues[i].value;
-		parentElement = timeValues[i].parentNode;
+		activity = toTitleCase(activityList.eq(i).val());
+		timeValue = parseFloat(timeValues.eq(i).val());
+		convertorValue = convertorValues.eq(i).val();
+		parentElement = timeValues.eq(i).parent();
 		if (convertorValue == 'Hours') {
 			minuteTimeValue = parseFloat(timeValue) * 60;
 		}
@@ -395,14 +403,14 @@ function returnTimeDict() {
 		maxElement = timeValues[rawValueList.indexOf(c)].parentNode;
 	}
 	catch(err) {
-		maxElement = $$('activityObject')[0];
+		maxElement = $('.activityObject').first();
 	}
 
 	try {
-		maxConvertor = maxElement.childNodes[4].value;
+		maxConvertor = maxElement.children().eq(4).val();
 	}
 	catch(err) {
-		maxConvertor = $$('convertValues')[0];
+		maxConvertor = $('.convertValues')[0];
 	}
 
 	dict.push({maxValue: c, maxConvertor: maxConvertor, maxElement: maxElement})

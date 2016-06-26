@@ -1,24 +1,27 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Passing Life - Custom Data</title>
+	<title>Passing Life - Customize</title>
 	<link rel="shortcut icon" href="Media/favicon.ico" />
+	<script src='Scripts/jquery.js'></script>
 	<script src="Scripts/Chart.js"></script>
 	<script src="Scripts/variables.js"></script>
 	<script src="Scripts/arrays.js"></script>
 	<script src="Scripts/globalfunctions.js"></script>
+	<script src="Scripts/healthcalculator.js"></script>
 	<script src="Scripts/chartpage.js"></script>
 	<link rel="stylesheet" type="text/css" href="Styles/chartpage.css">
 	<link rel="stylesheet" type="text/css" href="Styles/style.css">
+	<link rel="stylesheet" type="text/css" href="Styles/healthpages.css">
 	<meta name="Description" content="Displays an accurate percentage of your life that has passed using nationality, age and gender.">
 </head>
 <body onload="addInputLine(); onloadFunction(); getAndSetFormVars(); formsOnChange()">
 	<div class="mainsection">
 		<nav class="nav">
 			<ul class="navitems">
-				<a class="navitem" href="home.html"><li>The Calculator</li></a>
-				<a class="navitem" href="daily.html"><li>Customize</li></a>
-				<a class="navitem" href="data.html"><li>Data</li></a>
+				<a class="navitem navitemleft" href="index.html"><li>The Calculator</li></a>
+				<a class="navitem" href="customize.html"><li>Customize</li></a>
+				<a class="navitem" href="showdata.html"><li>Personal Info</li></a>
 			</ul>
 		</nav>
 		<div class="center">
@@ -245,16 +248,12 @@
 			<p id='lifeexpectancy'></p>
 			<div id='customdata'>
 			</div>
-
 			<button id="addInputLine" onclick="addInputLine()">+</button><br>
 			<button id="generate" onclick="generateData()">Done</button> 
 			<div id="daychart"></div>
 			<p id='remaininglabel'>24 hours remaining</p>
 		<br/>
-		<p class='comingSoon'>
-		Note: Remaining or excess will be added or subtracted to the longest inputted activity<br/>
-		Coming Soon: Option to let your inputted activites effect your life expectancy
-		</p>
+		<p class='comingsoon'>Allow inputted activities to effect your life expectancy:</p><input onchange='generateData()' class='impactbox' type='checkbox' id='allowActivityImpact' checked/>
 	</div>
 	<script>dOBPopulate();</script>
 </body>

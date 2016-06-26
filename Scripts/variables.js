@@ -5,6 +5,9 @@ var msPerDay = 86400000;
 var msPerHour = 3600000;
 var msPerMinute = 60000;
 var msPerSecond = 1000;
+var minutesPerYear = 525949;
+var secPerDay = 86400;
+var averageDaysPerMonth = 30.4375;
 var msInHour;
 var gender;
 var countryValue;
@@ -35,7 +38,6 @@ var yob;
 var mob;
 var dob;
 var realYearsAlive;
-var audio = document.getElementById("audioOne");
 var arrayTwo = [[" years", " year"], [" months", " month"], [" days"," day"], [" hours", " hour"], [" minutes", " minute"], [" seconds", " second"]]
 var daysInMonth = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
 var saved;
