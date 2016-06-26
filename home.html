@@ -1,33 +1,33 @@
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:fb="http://ogp.me/ns/fb#">
 <head>
-	<title>Passing Life - Customize</title>
+	<title>Passing Life</title>
 	<link rel="shortcut icon" href="Media/favicon.ico" />
+	<meta property="og:title"
+	content="See an accurate percentage of your life that has passed."/>
+	<meta property="og:image" content="Media/clock2.jpg">
 	<script src='Scripts/jquery.js'></script>
-	<script src="Scripts/Chart.js"></script>
 	<script src="Scripts/variables.js"></script>
 	<script src="Scripts/arrays.js"></script>
 	<script src="Scripts/globalfunctions.js"></script>
-	<script src="Scripts/healthcalculator.js"></script>
-	<script src="Scripts/chartpage.js"></script>
-	<link rel="stylesheet" type="text/css" href="Styles/chartpage.css">
+	<script src="Scripts/fullscript.js"></script>
 	<link rel="stylesheet" type="text/css" href="Styles/style.css">
-	<link rel="stylesheet" type="text/css" href="Styles/healthpages.css">
-	<meta name="Description" content="Displays an accurate percentage of your life that has passed using nationality, age and gender.">
+	<meta name="Description" content="Displays the estimated passed percentage of your life using nationality, age and gender.">
 </head>
-<body onload="addInputLine(); onloadFunction(); getAndSetFormVars(); formsOnChange()">
-	<div class="mainsection">
-		<nav class="nav">
+<body onload="onloadFunction(); setInterval(function(){formOnChange()}, 50)">
+	<div class="mainsection textaligncenter">
+		<nav class="nav"> <!--Navigation bar-->
 			<ul class="navitems">
-				<a class="navitem navitemleft" href="index.html"><li>The Calculator</li></a>
-				<a class="navitem" href="customize.html"><li>Customize</li></a>
-				<a class="navitem" href="showdata.html"><li>Personal Info</li></a>
+				<a id="edit" class="navitem navitemleft" href="home.html"><li>The Calculator</li></a>
+				<a class="navitem" href="daily.html"><li>Daily</li></a>
+				<a class="navitem" href="data.html"><li>Data</li></a>
 			</ul>
 		</nav>
+		<h1 class="title" id="test">Percent of your life that has passed</h1>
+		<p class="warning">Warning: This may be <strong>depressing</strong>.</p>
 		<div class="center">
-
-			<h4>Fill out the form below for more information</h4>
-			<select autofocus id="country" class="countryselect normal" onchange="getAndSetFormVars(); formsOnChange(); updateGenerator()"><!--Country of birth-->
+			<select autofocus id="country" class="countryselect normal" onchange="getAndSetFormVars()"><!--Country of birth-->
 				<option value="NaN">Country of Birth</option>
 				<optgroup label="Recommended Countries">
 					<option value="179">United States</option>
@@ -224,36 +224,33 @@
 			</select>
 			<br/>
 			<div class="center">
-				<select class="normal" id="monthofbirth" onchange="getAndSetFormVars(); formsOnChange(); updateGenerator()"><!--Month born-->
+				<select class="normal" id="monthofbirth" onchange="getAndSetFormVars()"><!--Month born-->
 					<option>Month</option>
 					<option disabled="disabled" value="NaN"></option>
 				</select>
 
-				<select id="dayofbirth" class="normal" onchange="getAndSetFormVars(); formsOnChange(); updateGenerator()"><!--Day of month born-->
+				<select id="dayofbirth" class="normal" onchange="getAndSetFormVars(); yearOfBirth()"><!--Day of month born-->
 					<option>Day</option>
 					<option disabled="disabled" value="NaN"></option>
 				</select>
 
-				<select id="yearofbirth" class="normal" onchange="getAndSetFormVars(); formsOnChange(); updateGenerator()"><!--Year born-->
+				<select id="yearofbirth" class="normal" onchange="getAndSetFormVars()"><!--Year born-->
 					<option>Year</option>
-					<option disabled="disabled" value="100000"></option>
+					<option disabled="disabled" value="NaN"></option>
 				
 				</select><br/><br/>
 			</div>
-			<select id="genderselect" class="normal" onchange="getAndSetFormVars(); formsOnChange(); updateGenerator()"><!--Gender-->
+			<select id="genderselect" class="normal" onchange="getAndSetFormVars()"><!--Gender-->
 				<option value="NaN">Gender</option>
 				<option value="0">Male</option>
 				<option value="1">Female</option>
 			</select>
-			<p id='lifeexpectancy'></p>
-			<div id='customdata'>
-			</div>
-			<button id="addInputLine" onclick="addInputLine()">+</button><br>
-			<button id="generate" onclick="generateData()">Done</button> 
-			<div id="daychart"></div>
-			<p id='remaininglabel'>24 hours remaining</p>
-		<br/>
-		<p class='comingsoon'>Allow inputted activities to effect your life expectancy:</p><input onchange='generateData()' class='impactbox' type='checkbox' id='allowActivityImpact' checked/>
+		</div>
+		<p id="percentlifepassed" class="noselect"></p>
+		<p id="age"></p>
+		<div class="noselect" id="moreinfo"></div>
+		<div id="percentlifeworking"></div> 
 	</div>
-	<script>dOBPopulate();</script>
+	<script type="text/javascript">dayOfBirth(31); monthOfBirth(); yearOfBirth();</script>
 </body>
+</html>

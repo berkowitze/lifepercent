@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 function local() {
 	if (document.URL == 'http://www.lifepercent.com' || document.URL == 'http://lifepercent.com') {
 		$('#edit').href = 'http://www.lifepercent.com';
@@ -9,6 +10,10 @@ function expectancyAndAgeDetermination(impact) {
 	if (impact == undefined) {
 		impact = 0;
 	}
+=======
+function expectancyAndAgeDetermination(impact=0) {
+	getAndSetFormVars();
+>>>>>>> master
 	d = new Date();
 	currentYear = d.getFullYear();
 	currentMonth = d.getMonth();
@@ -94,6 +99,13 @@ function dOBPopulate() {
 	monthOfBirth();
 }
 
+<<<<<<< HEAD
+=======
+function getDropdown() {
+	$('div#country-dropdown').load('templates/country-dropdown.html');
+}
+
+>>>>>>> master
 function onloadFunction() {
 	if (document.title.indexOf('Personal Info') >= 0) {
 		selectList = [['gender', 'genderselect'], ['countryValue', 'country']];

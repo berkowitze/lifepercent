@@ -1,44 +1,33 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:fb="http://ogp.me/ns/fb#">
+<html>
 <head>
-	<title>Passing Life</title>
+	<title>Passing Life - Customize</title>
 	<link rel="shortcut icon" href="Media/favicon.ico" />
-	<meta property="og:title"
-	content="See an accurate percentage of your life that has passed."/>
-	<meta property="og:image" content="Media/clock2.jpg">
+	<script src='Scripts/jquery.js'></script>
+	<script src="Scripts/Chart.js"></script>
 	<script src="Scripts/variables.js"></script>
 	<script src="Scripts/arrays.js"></script>
 	<script src="Scripts/globalfunctions.js"></script>
-	<script src="Scripts/fullscript.js"></script>
+	<script src="Scripts/healthcalculator.js"></script>
+	<script src="Scripts/chartpage.js"></script>
+	<link rel="stylesheet" type="text/css" href="Styles/chartpage.css">
 	<link rel="stylesheet" type="text/css" href="Styles/style.css">
-	<meta name="Description" content="Displays the estimated passed percentage of your life using nationality, age and gender.">
-	<meta name="google-translate-customization" content="5e07c945738438f-1b7efd0d14856663-g7d03c12952eb85cd-13">
-	<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-56257317-1', 'auto');
-  ga('send', 'pageview');
-
-	</script>
+	<link rel="stylesheet" type="text/css" href="Styles/healthpages.css">
+	<meta name="Description" content="Displays an accurate percentage of your life that has passed using nationality, age and gender.">
 </head>
-<body onload="onloadFunction(); local(); setInterval(function() {expectancyAndAgeDetermination('Yes')}, 50)">
-	<div class="mainsection textaligncenter">
-		<nav class="nav"> <!--Navigation bar-->
+<body onload="addInputLine(); onloadFunction(); getAndSetFormVars(); formsOnChange()">
+	<div class="mainsection">
+		<nav class="nav">
 			<ul class="navitems">
-				<a id="edit" class="navitem navitemleft" href="index.html"><li>The Calculator</li></a>
-				<a class="navitem" href="customize.html"><li>Customize</li></a>
-				<a class="navitem" href="showdata.html"><li>Personal Info</li></a>
+				<a id="edit" class="navitem navitemleft" href="home.html"><li>The Calculator</li></a>
+				<a class="navitem" href="daily.html"><li>Daily</li></a>
+				<a class="navitem" href="data.html"><li>Data</li></a>
 			</ul>
 		</nav>
-		<h1 class="title" id="test">Percent of your life that has passed</h1>
-		<p class="warning">Warning: This may be <strong>depressing</strong>.</p>
 		<div class="center">
-		<div class="fb-share-button" data-href="http://lifepercent.com" data-layout="icon"></div>
-			<select autofocus id="country" class="countryselect normal" onchange="getAndSetFormVars()"><!--Country of birth-->
+
+			<h4>Fill out the form below for more information</h4>
+			<select autofocus id="country" class="countryselect normal" onchange="getAndSetFormVars(); formsOnChange(); updateGenerator()"><!--Country of birth-->
 				<option value="NaN">Country of Birth</option>
 				<optgroup label="Recommended Countries">
 					<option value="179">United States</option>
@@ -235,34 +224,36 @@
 			</select>
 			<br/>
 			<div class="center">
-				<select class="normal" id="monthofbirth" onchange="getAndSetFormVars()"><!--Month born-->
+				<select class="normal" id="monthofbirth" onchange="getAndSetFormVars(); formsOnChange(); updateGenerator()"><!--Month born-->
 					<option>Month</option>
 					<option disabled="disabled" value="NaN"></option>
 				</select>
 
-				<select id="dayofbirth" class="normal" onchange="getAndSetFormVars(); yearOfBirth()"><!--Day of month born-->
+				<select id="dayofbirth" class="normal" onchange="getAndSetFormVars(); formsOnChange(); updateGenerator()"><!--Day of month born-->
 					<option>Day</option>
 					<option disabled="disabled" value="NaN"></option>
 				</select>
 
-				<select id="yearofbirth" class="normal" onchange="getAndSetFormVars()"><!--Year born-->
+				<select id="yearofbirth" class="normal" onchange="getAndSetFormVars(); formsOnChange(); updateGenerator()"><!--Year born-->
 					<option>Year</option>
-					<option disabled="disabled" value="NaN"></option>
+					<option disabled="disabled" value="100000"></option>
 				
 				</select><br/><br/>
 			</div>
-			<select id="genderselect" class="normal" onchange="getAndSetFormVars()"><!--Gender-->
+			<select id="genderselect" class="normal" onchange="getAndSetFormVars(); formsOnChange(); updateGenerator()"><!--Gender-->
 				<option value="NaN">Gender</option>
 				<option value="0">Male</option>
 				<option value="1">Female</option>
 			</select>
-		</div>
-		<p id="percentlifepassed" class="noselect"></p>
-		<p id="age"></p>
-		<div class="noselect" id="moreinfo"></div>
-		<div id="percentlifeworking"></div> 
-		<a href='mobile.html'>Click here to go to mobile site</a>
+			<p id='lifeexpectancy'></p>
+			<div id='customdata'>
+			</div>
+			<button id="addInputLine" onclick="addInputLine()">+</button><br>
+			<button id="generate" onclick="generateData()">Done</button> 
+			<div id="daychart"></div>
+			<p id='remaininglabel'>24 hours remaining</p>
+		<br/>
+		<p class='comingsoon'>Allow inputted activities to effect your life expectancy:</p><input onchange='generateData()' class='impactbox' type='checkbox' id='allowActivityImpact' checked/>
 	</div>
-	<script type="text/javascript">dayOfBirth(31); monthOfBirth(); yearOfBirth();</script>
+	<script>dOBPopulate();</script>
 </body>
-</html>
