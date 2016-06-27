@@ -19,7 +19,7 @@ function functionOne() {
 		realYearsAlive = msAlive / msPerYear;
 	//Determines Life Expectancy
 		if ((isNaN(gender + countryValue))) {
-			lifeExpectancy = dOBError;
+			lifeExpectancy = fillFormMessage;
 		}
 		else {
 			ageRange = parseInt((realYearsAlive)/5);
@@ -39,7 +39,7 @@ function functionOne() {
 			text = aboveLE;
 		}
 		else if (isNaN(percentLifePassed)) {
-			text = dOBError;
+			text = fillFormMessage;
 		}
 		else if (percentLifePassed > 99) {
 			text = almostDead;

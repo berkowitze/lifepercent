@@ -1,49 +1,3 @@
-function genSelects() {
-	normGroup = $('optgroup#normalgroup');
-	recommendedGroup = $('optgroup#recommendedgroup');
-	Object.keys(leDict).map(function(countryName, i) {
-		option = $('<option>');
-		option.val(i);
-		option.text(countryName);
-		if (i != 179 || i != 30) {	
-			normGroup.append(option);	
-		}
-	});
-	option = $('<option>');
-	option.val(179);
-	option.text('United States');
-	recommendedGroup.append(option);
-	option = $('<option>');
-	option.val(30);
-	option.text('Canada');
-	recommendedGroup.append(option);
-
-	monthSelect = $('#monthofbirth');
-	for (i=0; i < monthsOfYear.length; i++) {
-		option = $('<option>');
-		option.val(i);
-		option.text(monthsOfYear[i]);
-		monthSelect.append(option);
-	}
-
-	daySelect = $('#dayofbirth');
-	for (i=1; i <= 31; i++) {
-		option = $('<option>');
-		option.val(i);
-		option.text(i);
-		daySelect.append(option);
-	}
-
-	year = new Date().getFullYear();
-	yearSelect = $('#yearofbirth');
-	for (i=year; i > (year - 105); i--) {
-		option = $('<option>');
-		option.val(i);
-		option.text(i);
-		yearSelect.append(option);
-	}
-}
-
 function formComplete(healthImpact=0) {
 	d = new Date();
 	currentYear 	= d.getFullYear();
@@ -81,7 +35,7 @@ function formComplete(healthImpact=0) {
 
 	msInLife = lifeExpectancy * msPerYear;
 	percentPassed = msAlive * 100 / msInLife;
-	console.log(percentPassed);
+	textEdit();
 }
 
 function formIncomplete() {
@@ -90,7 +44,8 @@ function formIncomplete() {
 	}
 	catch(err) {}
 	finally {
-
+		$('#percentlifepassed').text(fillFormMessage);
+		$('#moreinfo').text('');
 	}
 }
 
@@ -104,7 +59,6 @@ function formChange(select) {
 	check = Object.keys(formDict).map(function(key) {
 		return formDict[key];
 	});
-	console.log(check.every(Number.isInteger));
 	if (check.every(Number.isInteger)) {
 		interval = setInterval(formComplete, 50);
 	}
@@ -158,6 +112,52 @@ function lETable() {
 	}
 	catch(err) {
 		console.log(err.toString());
+	}
+}
+
+function genSelects() {
+	normGroup = $('optgroup#normalgroup');
+	recommendedGroup = $('optgroup#recommendedgroup');
+	Object.keys(leDict).map(function(countryName, i) {
+		option = $('<option>');
+		option.val(i);
+		option.text(countryName);
+		if (i != 179 || i != 30) {	
+			normGroup.append(option);	
+		}
+	});
+	option = $('<option>');
+	option.val(179);
+	option.text('United States');
+	recommendedGroup.append(option);
+	option = $('<option>');
+	option.val(30);
+	option.text('Canada');
+	recommendedGroup.append(option);
+
+	monthSelect = $('#monthofbirth');
+	for (i=0; i < monthsOfYear.length; i++) {
+		option = $('<option>');
+		option.val(i);
+		option.text(monthsOfYear[i]);
+		monthSelect.append(option);
+	}
+
+	daySelect = $('#dayofbirth');
+	for (i=1; i <= 31; i++) {
+		option = $('<option>');
+		option.val(i);
+		option.text(i);
+		daySelect.append(option);
+	}
+
+	year = new Date().getFullYear();
+	yearSelect = $('#yearofbirth');
+	for (i=year; i > (year - 105); i--) {
+		option = $('<option>');
+		option.val(i);
+		option.text(i);
+		yearSelect.append(option);
 	}
 }
 

@@ -1,7 +1,7 @@
 function formsOnChange(impact) {
 	expectancyAndAgeDetermination(impact);
 	button = $('#generate');
-	if ((isNaN(lifeExpectancy)) || (lifeExpectancy == dOBError)) {
+	if ((isNaN(lifeExpectancy)) || (lifeExpectancy == fillFormMessage)) {
 		button.prop('disabled', true);
 		button.text('Complete form above');
 		removeLastNodes();
@@ -10,7 +10,7 @@ function formsOnChange(impact) {
 		button.prop('disabled', false);
 		button.text('Done');
 	}
-	if ((lifeExpectancy != dOBError) && (!isNaN(lifeExpectancy))) {
+	if ((lifeExpectancy != fillFormMessage) && (!isNaN(lifeExpectancy))) {
 		$('#lifeexpectancy').html('');
 		$('#lifeexpectancy').append('Life expectancy: ', Number(lifeExpectancy).toFixed(2));
 		if (impact > 0) {
@@ -35,7 +35,7 @@ function formsOnChange(impact) {
 
 		}
 		if (!isNaN(impact)) {
-			$('#lifeexpectancy').append('<br/><a href="index.html">Return to main page</a>')
+			$('#lifeexpectancy').append('<br/><a href="calculator.html">Return to main page</a>')
 		}
 	}
 	else {

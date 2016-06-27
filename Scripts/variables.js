@@ -11,7 +11,7 @@ var secPerDay = 86400;
 var averageDaysPerMonth = 30.4375;
 
 // Messages
-var dOBError = "Please enter your birth country, date of birth and gender";
+var fillFormMessage = "Please enter your birth country, date of birth and gender";
 var almostDead = "You're in your last moments";
 var invalidDOB = "You're not alive... please enter a <i>real</i> date of birth";
 var aboveLE = "You lived over your average life expectancy - Congratulations!";
