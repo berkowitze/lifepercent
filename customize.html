@@ -12,17 +12,17 @@
 	<script src='Scripts/chartpage.js'></script>
 	<link rel='stylesheet' type='text/css' href='Styles/chartpage.css'>
 	<link rel='stylesheet' type='text/css' href='Styles/base-style.css'>
-	<link rel='stylesheet' type='text/css' href='Styles/daily-style.css'>
+	<link rel='stylesheet' type='text/css' href='Styles/customize-style.css'>
 	<link rel='stylesheet' type='text/css' href='Styles/healthpages.css'>
 	<meta name='Description' content='Displays an accurate percentage of your life that has passed using nationality, age and gender.'>
 </head>
 <body>
 	<div class='mainsection'>
-		<nav class='nav'>
+		<nav>
 			<ul class='navitems'>
-				<a class='navitem' href='calculator.html'><li>The Calculator</li></a>
-				<a class='navitem' href='daily.html'><li>Daily</li></a>
-				<a class='navitem' href='data.html'><li>Data</li></a>
+				<a href='calculator.html'><li>The Calculator</li></a>
+				<a href='customize.html'><li>Customize</li></a>
+				<a href='data.html'><li>Data</li></a>
 			</ul>
 		</nav>
 		<h1 id='title'>Customize</h1>
@@ -60,5 +60,5 @@
 		<br/>
 		<p class='comingsoon'>Allow inputted activities to effect your life expectancy:</p><input onchange='generateData()' class='impactbox' type='checkbox' id='allowActivityImpact' checked/>
 	</div>
-	<script>dOBPopulate();</script>
 </body>
+</html>

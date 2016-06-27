@@ -96,3 +96,13 @@ h1#title {
 	font-size: 160%;
 	margin-bottom: 1em;
 }
+
+p#dateofbirth {
+	margin-top: .5em !important;
+	margin: .2em;
+}
+
+.currentPage li {
+	text-decoration: underline;
+	//border-bottom: 2px solid #f4a460;
+}

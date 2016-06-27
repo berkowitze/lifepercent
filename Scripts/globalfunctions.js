@@ -17,9 +17,9 @@ function formComplete(healthImpact=0, editText=false) {
 	monthsAlive = currentMonth - formDict['monthofbirth'];
 	daysAlive 	= currentDay - formDict['dayofbirth'];
 	msAlive 	= yearsAlive * msPerYear
-			+ monthsAlive * msPerMonth
-			+ daysAlive * msPerDay
-			+ msSinceMidnight;
+				+ monthsAlive * msPerMonth
+				+ daysAlive * msPerDay
+				+ msSinceMidnight;
 	decimalYearsAlive = msAlive / msPerYear;
 	range = parseInt(decimalYearsAlive / 5);
 	array = leDict[Object.keys(leDict)[formDict['country']]][formDict['sex']];
@@ -58,9 +58,11 @@ function formChange(select) {
 	formDict[id] = val;
 	sessionStorage.setItem(id, val);
 
-	changeCheck(Object.keys(formDict).map(function(key) {
-		return formDict[key];
-	}));
+	changeCheck(Object.keys(formDict).map(
+		function(key) {
+			return formDict[key];
+		}
+	));
 }
 
 function fillForm() {
@@ -168,24 +170,27 @@ function genSelects() {
 
 $(document).ready(function() {
 	if (document.title.includes('Calculator')) {
+		$('a[href="calculator.html"]').addClass('currentPage');
 		useInterval = true;
 		genSelects();
 		fillForm();
 	}
 	else if (document.title.includes('Customize')) {
+		$('a[href="customize.html"]').addClass('currentPage');
 		useInterval = false;
 		genSelects();
 		fillForm();
 	}
 	else if (document.title.includes('Data')) {
+		$('a[href="data.html"]').addClass('currentPage');
 		useInterval = false;
 	}
 	else {}
 });
 
-function ind(a) {
-	if (a == undefined) {
+function ind(inp) {
+	if (inp == undefined) {
 		console.log('ind');
 	}
-	else {console.log(a)}
+	else {console.log(inp)}
 }
