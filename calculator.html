@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html xmlns='http://www.w3.org/1999/xhtml'
-xmlns:fb='http://ogp.me/ns/fb#'>
+<html>
 <head>
 	<title>Life Percent</title>
 	<link rel='shortcut icon' href='Media/favicon.ico' />
@@ -11,7 +10,8 @@ xmlns:fb='http://ogp.me/ns/fb#'>
 	<script src='Scripts/countryDict.js'></script>
 	<script src='Scripts/globalfunctions.js'></script>
 	<script src='Scripts/fullscript.js'></script>
-	<link rel='stylesheet' type='text/css' href='Styles/style.css'>
+	<link rel='stylesheet' type='text/css' href='Styles/calculator-style.css'>
+	<link rel='stylesheet' type='text/css' href='Styles/base-style.css'>
 	<meta name='Description' content='Displays the estimated passed percentage of your life using nationality, age and gender.'>
 </head>
 <body>
@@ -36,17 +36,17 @@ xmlns:fb='http://ogp.me/ns/fb#'>
 			<p id='dateofbirth'>Date of birth:</p>
 			<select id='monthofbirth' onchange='formChange(this)'><!--Month born-->
 				<option>Month</option>
-				<option disabled='disabled' value='NaN'></option>
+				<option disabled value='NaN'></option>
 			</select>
 
 			<select id='dayofbirth' onchange='formChange(this)'>
 				<option>Day</option>
-				<option disabled='disabled' value='NaN'></option>
+				<option disabled value='NaN'></option>
 			</select>
 
 			<select id='yearofbirth' onchange='formChange(this)'><!--Year born-->
 				<option>Year</option>
-				<option disabled='disabled' value='NaN'></option>
+				<option disabled value='NaN'></option>
 				
 			</select><br/><br/>
 			<select id='sex' onchange='formChange(this)'><!--Gender-->

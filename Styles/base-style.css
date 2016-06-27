@@ -1,0 +1,93 @@
+body {
+	font-size: 20px;
+	background-image: url('../Media/backgroundone.png');
+	font-family: Futura, "Trebuchet MS", Arial, sans-serif;
+}
+
+a, a:visited {
+	color: black;
+}
+
+nav ul li {
+	width: 170px;
+	height: 25px;
+	text-align: center;
+	background-color: #FFF8DC;
+	display: inline-block;
+	margin: 5px 10px;
+	padding: 5px;
+	border-radius: 10px;
+}
+
+ul.navitems {
+	list-style: none;
+	text-align: center;
+	padding-left: 0;
+}
+
+div.mainsection {
+	text-align: center;
+	margin: 0 auto;
+	border: 2px solid #FFF8DC;
+	padding: 5px 30px;
+	background-image: url('../Media/backgroundtwo.png');
+	width: 70%;
+	min-height: 550px;
+}
+
+select {
+	font-family: Futura, "Trebuchet MS", Arial, sans-serif;
+	background-color: #FFF8DC;
+	border: none;
+	font-size: 18px;
+	width: 150px;
+}
+
+select#country {
+	width: 350px !important;
+}
+
+select:-moz-focusring {
+	color: transparent;
+    text-shadow: 0 0 0 #000;
+}
+select:active {
+	cursor: pointer;
+	outline: none;
+}
+
+select:focus, select:hover {
+	cursor: pointer;
+	outline-color: #f4a460;
+	outline-width: 2px;
+}
+
+p#percentlifepassed {
+	font-size: 25px;
+}
+
+h3 {
+	font-size: 120%;
+}
+
+.absolute-hide {
+	display: none !important;
+}
+
+
+.noselect {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.noselect:hover {
+	cursor:default;
+}
+
+div.firstletterbigger p:first-letter {
+	font-size: 110%;
+}

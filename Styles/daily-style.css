@@ -1,0 +1,27 @@
+input {
+	font-size: 20px;
+	font-family: Futura, "Trebuchet MS", Arial, sans-serif;
+	background-color: #FFF8DC;
+	border: none;
+	border-radius: 5px;
+}
+
+select.convertorValues {
+	margin-left:5px;
+}
+
+.warning {
+	font-size: 23px;
+	color: maroon;
+}
+
+.comingSoon {
+	color: darkgrey;
+	font-size: 70%;
+	margin-bottom: none;
+}
+
+a#customizeExpectancy {
+	font-size: 65%;
+	text-decoration: none;
+}

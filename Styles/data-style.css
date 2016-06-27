@@ -1,0 +1,11 @@
+table#learray td, table{
+	border: none;
+	border-bottom: 1px solid black;
+	border-collapse: collapse;
+	text-align: center;
+	margin: 0 auto;
+}
+
+td {
+	padding: 10px;
+}
