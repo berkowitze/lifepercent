@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns='http://www.w3.org/1999/xhtml'
+xmlns:fb='http://ogp.me/ns/fb#'>
+<head>
+	<title>Life Percent</title>
+	<link rel='shortcut icon' href='Media/favicon.ico' />
+	<meta property='og:title' content='See an accurate percentage of your life that has passed.'/>
+	<meta property='og:image' content='Media/clock2.jpg'>
+	<script src='Scripts/jquery.js'></script>
+	<script src='Scripts/variables.js'></script>
+	<script src='Scripts/countryDict.js'></script>
+	<script src='Scripts/globalfunctions.js'></script>
+	<script src='Scripts/fullscript.js'></script>
+	<link rel='stylesheet' type='text/css' href='Styles/style.css'>
+	<meta name='Description' content='Displays the estimated passed percentage of your life using nationality, age and gender.'>
+</head>
+<body>
+	<div class='mainsection'>
+		<nav>
+			<ul class='navitems'>
+				<a href='calculator.html'><li>The Calculator</li></a>
+				<a href='daily.html'><li>Daily</li></a>
+				<a href='data.html'><li>Data</li></a>
+			</ul>
+		</nav>
+		<h1 id='title'>Percent of your life that has passed</h1>
+		<div id='formwrapper'>
+			<select autofocus id='country' onchange='formChange(this)'>
+				<option value='NaN'>Country of Birth</option>
+				<optgroup label='Recommended Countries' id='recommendedgroup'>
+				</optgroup>
+				<optgroup label='Other Countries' id='normalgroup'>
+				</optgroup>
+			</select>
+			<br/>
+			<p id='dateofbirth'>Your date of birth:</p>
+			<select id='monthofbirth' onchange='formChange(this)'><!--Month born-->
+				<option>Month</option>
+				<option disabled='disabled' value='NaN'></option>
+			</select>
+
+			<select id='dayofbirth' onchange='formChange(this)'>
+				<option>Day</option>
+				<option disabled='disabled' value='NaN'></option>
+			</select>
+
+			<select id='yearofbirth' onchange='formChange(this)'><!--Year born-->
+				<option>Year</option>
+				<option disabled='disabled' value='NaN'></option>
+				
+			</select><br/><br/>
+			<select id='sex' onchange='formChange(this)'><!--Gender-->
+				<option value='NaN'>Sex</option>
+				<option value='0'>Male</option>
+				<option value='1'>Female</option>
+			</select>
+		</div>
+		<div id='infowrapper' class='noselect'>
+			<p id='percentlifepassed'></p>
+			<p id='age'></p>
+			<div id='moreinfo'></div>
+			<div id='percentlifeworking'></div>
+		</div>
+	</div>
+</body>
+</html>

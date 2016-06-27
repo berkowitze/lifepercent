@@ -69,8 +69,12 @@ function formComplete(healthImpact=0) {
 	decimalYearsAlive = msAlive / msPerYear;
 	range = parseInt(decimalYearsAlive / 5);
 	array = leDict[Object.keys(leDict)[formDict['country']]][formDict['sex']];
-
-	slope 			= (array[range + 1] - array[range]) / 5;
+	try {
+		slope 			= (array[range + 1] - array[range]) / 5;
+	}
+	catch(err) {
+		clearInterval(interval);
+	}
 	yIntercept 		= array[range] - (slope * range * 5);
 	lifeExpectancy 	= slope * decimalYearsAlive + yIntercept;
 	lifeExpectancy 	+= healthImpact;
@@ -84,7 +88,7 @@ function formIncomplete() {
 	try {
 		clearInterval(interval);
 	}
-	catch(err) {console.log(err)}
+	catch(err) {}
 	finally {
 
 	}

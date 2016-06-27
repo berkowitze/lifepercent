@@ -13,6 +13,7 @@ input {
 }
 
 div.mainsection {
+	text-align: center;
 	margin: 0 auto;
 	border: 2px solid #FFF8DC;
 	padding-left: 30px;
@@ -23,28 +24,17 @@ div.mainsection {
 	width: 70%;
 	min-height: 600px;
 }
-.textaligncenter {
-	text-align: center;
-}
-.textalignleft {
-	text-align: left;
-}
-.center {
-	margin: 0 auto;
-	text-align: center;
-}
+
 select {
 	font-family: Futura, "Trebuchet MS", Arial, sans-serif;
 	background-color: #FFF8DC;
 	border: none;
 	font-size: 18px;
-}
-select.normal {
 	width: 150px;
 }
-select.countryselect {
-	margin-bottom: 20px;
-	width: 350px;
+
+select#country {
+	width: 350px !important;
 }
 
 select.convertorValues {
@@ -55,10 +45,17 @@ select:-moz-focusring {
 	color: transparent;
     text-shadow: 0 0 0 #000;
 }
-select:hover, select:active, select:focus {
+select:active {
 	cursor: pointer;
 	outline: none;
 }
+
+select:focus, select:hover {
+	cursor: pointer;
+	outline-color: #f4a460;
+	outline-width: 2px;
+}
+
 .warning {
 	font-size: 23px;
 	color: maroon;
@@ -87,8 +84,9 @@ ul.navitems {
 	text-align: center;
 	padding-left: 0;
 }
-h1.title {
-	text-decoration: underline;
+h1#title {
+	font-size: 160%;
+	margin-bottom: 1em;
 }
 div.firstletterbigger p:first-letter {
 	font-size: 110%;
@@ -142,4 +140,9 @@ h3 {
 a#customizeExpectancy {
 	font-size: 65%;
 	text-decoration: none;
+}
+
+p#dateofbirth {
+	margin-top: .5em !important;
+	margin: .2em;
 }
