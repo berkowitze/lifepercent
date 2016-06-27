@@ -91,3 +91,8 @@ h3 {
 div.firstletterbigger p:first-letter {
 	font-size: 110%;
 }
+
+h1#title {
+	font-size: 160%;
+	margin-bottom: 1em;
+}

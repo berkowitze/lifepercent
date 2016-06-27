@@ -1,4 +1,4 @@
-function formComplete(healthImpact=0) {
+function formComplete(healthImpact=0, editText=false) {
 	d = new Date();
 	currentYear 	= d.getFullYear();
 	currentMonth 	= d.getMonth();
@@ -35,7 +35,9 @@ function formComplete(healthImpact=0) {
 
 	msInLife = lifeExpectancy * msPerYear;
 	percentPassed = msAlive * 100 / msInLife;
-	textEdit();
+	if (editText) {
+		textEdit();
+	}
 }
 
 function formIncomplete() {
@@ -56,15 +58,9 @@ function formChange(select) {
 	formDict[id] = val;
 	sessionStorage.setItem(id, val);
 
-	check = Object.keys(formDict).map(function(key) {
+	changeCheck(Object.keys(formDict).map(function(key) {
 		return formDict[key];
-	});
-	if (check.every(Number.isInteger)) {
-		interval = setInterval(formComplete, 50);
-	}
-	else {
-		formIncomplete();
-	}
+	}));
 }
 
 function fillForm() {
@@ -75,7 +71,7 @@ function fillForm() {
 		selectList = ['country', 'yearofbirth', 'monthofbirth', 'dayofbirth', 'sex'];
 	}
 
-	storageCheck = selectList.map(function(id) {
+	changeCheck(selectList.map(function(id) {
 		storageItem = parseInt(sessionStorage.getItem(id));
 		formDict[id] = storageItem;
 		select = $('select#' + id);
@@ -83,9 +79,18 @@ function fillForm() {
 			select.val(storageItem);
 			return storageItem;
 		}
-	});
-	if (storageCheck.every(Number.isInteger)) {
-		interval = setInterval(formComplete, 50);
+	}));
+}
+
+function changeCheck(arr) {
+	arrCheck = arr.every(Number.isInteger);
+	if (useInterval && arrCheck) {
+		interval = setInterval(
+			function(){formComplete(impact=0, editText=true)},
+			50);
+	}
+	else if (arrCheck) {
+		formComplete();
 	}
 	else {
 		formIncomplete();
@@ -161,7 +166,26 @@ function genSelects() {
 	}
 }
 
-$(document).ready(function(){
-	genSelects();
-	fillForm();
+$(document).ready(function() {
+	if (document.title.includes('Calculator')) {
+		useInterval = true;
+		genSelects();
+		fillForm();
+	}
+	else if (document.title.includes('Customize')) {
+		useInterval = false;
+		genSelects();
+		fillForm();
+	}
+	else if (document.title.includes('Data')) {
+		useInterval = false;
+	}
+	else {}
 });
+
+function ind(a) {
+	if (a == undefined) {
+		console.log('ind');
+	}
+	else {console.log(a)}
+}
