@@ -9,3 +9,7 @@ table#learray td, table{
 td {
 	padding: 10px;
 }
+
+select#country {
+	margin-bottom: .75em;
+}

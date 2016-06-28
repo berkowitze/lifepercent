@@ -65,14 +65,14 @@ function formChange(select) {
 	));
 }
 
-function fillForm() {
-	if (document.title.indexOf('Personal Info') >= 0) {
+function fillForm(forms) {
+	if (forms == 'slim') {
 		selectList = ['country', 'sex'];
 	}
 	else {
-		selectList = ['country', 'yearofbirth', 'monthofbirth', 'dayofbirth', 'sex'];
+		selectList = ['country', 'monthofbirth', 'dayofbirth', 'yearofbirth', 'sex'];
 	}
-
+	selectChanged = false;
 	changeCheck(selectList.map(function(id) {
 		storageItem = parseInt(sessionStorage.getItem(id));
 		formDict[id] = storageItem;
@@ -80,6 +80,10 @@ function fillForm() {
 		if ((storageItem != null) && Number.isInteger(storageItem)) {
 			select.val(storageItem);
 			return storageItem;
+		}
+		else if (!selectChanged) {
+			select.focus();
+			selectChanged = true;
 		}
 	}));
 }
@@ -99,30 +103,7 @@ function changeCheck(arr) {
 	}
 }
 
-function lETable() {
-	$('#learray').html('<td>Age</td><td>Life Expectancy</td>');
-	countryValue = parseInt($('#country').val());
-	gender = parseInt($('#sex').val());
-	sessionStorage.setItem('countryValue', countryValue);
-	sessionStorage.setItem('gender', gender);
-	try {
-		arrayToUse = lEArray[countryValue][gender];
-		for (i = 0; i < arrayToUse.length; i++) {
-			tr = $('<tr>');
-			firstTD = $('<td>');
-			firstTD.text((5 * i).toString());
-			secondTD = $('<td>');
-			secondTD.text(Number(arrayToUse[i]).toFixed(1).toString());
-			tr.append(firstTD, secondTD);
-			$("#learray").append(tr);
-		}
-	}
-	catch(err) {
-		console.log(err.toString());
-	}
-}
-
-function genSelects() {
+function genSelects(forms) {
 	normGroup = $('optgroup#normalgroup');
 	recommendedGroup = $('optgroup#recommendedgroup');
 	Object.keys(leDict).map(function(countryName, i) {
@@ -142,29 +123,31 @@ function genSelects() {
 	option.text('Canada');
 	recommendedGroup.append(option);
 
-	monthSelect = $('#monthofbirth');
-	for (i=0; i < monthsOfYear.length; i++) {
-		option = $('<option>');
-		option.val(i);
-		option.text(monthsOfYear[i]);
-		monthSelect.append(option);
-	}
+	if (forms == 'all') {
+		monthSelect = $('#monthofbirth');
+		for (i=0; i < monthsOfYear.length; i++) {
+			option = $('<option>');
+			option.val(i);
+			option.text(monthsOfYear[i]);
+			monthSelect.append(option);
+		}
 
-	daySelect = $('#dayofbirth');
-	for (i=1; i <= 31; i++) {
-		option = $('<option>');
-		option.val(i);
-		option.text(i);
-		daySelect.append(option);
-	}
+		daySelect = $('#dayofbirth');
+		for (i=1; i <= 31; i++) {
+			option = $('<option>');
+			option.val(i);
+			option.text(i);
+			daySelect.append(option);
+		}
 
-	year = new Date().getFullYear();
-	yearSelect = $('#yearofbirth');
-	for (i=year; i > (year - 105); i--) {
-		option = $('<option>');
-		option.val(i);
-		option.text(i);
-		yearSelect.append(option);
+		year = new Date().getFullYear();
+		yearSelect = $('#yearofbirth');
+		for (i=year; i > (year - 105); i--) {
+			option = $('<option>');
+			option.val(i);
+			option.text(i);
+			yearSelect.append(option);
+		}
 	}
 }
 
@@ -172,18 +155,21 @@ $(document).ready(function() {
 	if (document.title.includes('Calculator')) {
 		$('a[href="calculator.html"]').addClass('currentPage');
 		useInterval = true;
-		genSelects();
-		fillForm();
+		genSelects('all');
+		fillForm('all');
 	}
 	else if (document.title.includes('Customize')) {
 		$('a[href="customize.html"]').addClass('currentPage');
 		useInterval = false;
-		genSelects();
-		fillForm();
+		genSelects('all');
+		fillForm('all');
 	}
 	else if (document.title.includes('Data')) {
 		$('a[href="data.html"]').addClass('currentPage');
 		useInterval = false;
+		genSelects('slim');
+		fillForm('slim');
+		dataChange();
 	}
 	else {}
 });
