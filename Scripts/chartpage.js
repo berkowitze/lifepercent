@@ -1,5 +1,5 @@
 function formsOnChange(impact) {
-	expectancyAndAgeDetermination(impact);
+	formComplete(impact)
 	button = $('#generate');
 	if ((isNaN(lifeExpectancy)) || (lifeExpectancy == fillFormMessage)) {
 		button.prop('disabled', true);
