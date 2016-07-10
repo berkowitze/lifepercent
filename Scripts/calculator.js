@@ -1,4 +1,4 @@
-function textEdit() {
+function textEdit(arg) {
 	if (percentPassed < 0) {
 		text = invalidDOB;
 	}

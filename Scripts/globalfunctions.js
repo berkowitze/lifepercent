@@ -24,7 +24,7 @@ function formComplete(healthImpact=0, editText=false) {
 	range = parseInt(decimalYearsAlive / 5);
 	array = leDict[Object.keys(leDict)[formDict['country']]][formDict['sex']];
 	try {
-		slope 			= (array[range + 1] - array[range]) / 5;
+		slope = (array[range + 1] - array[range]) / 5;
 	}
 	catch(err) {
 		clearInterval(interval);
@@ -36,7 +36,7 @@ function formComplete(healthImpact=0, editText=false) {
 	msInLife = lifeExpectancy * msPerYear;
 	percentPassed = msAlive * 100 / msInLife;
 	if (editText) {
-		textEdit();
+		textEdit(impact);
 	}
 }
 
@@ -58,7 +58,7 @@ function formChange(select) {
 	formDict[id] = val;
 	sessionStorage.setItem(id, val);
 
-	changeCheck(Object.keys(formDict).map(
+	completed = changeCheck(Object.keys(formDict).map(
 		function(key) {
 			return formDict[key];
 		}
@@ -90,16 +90,28 @@ function fillForm(forms) {
 
 function changeCheck(arr) {
 	arrCheck = arr.every(Number.isInteger);
-	if (useInterval && arrCheck) {
-		interval = setInterval(
-			function(){formComplete(impact=0, editText=true)},
+	if (arrCheck) {
+		if (useInterval) {
+			interval = setInterval(
+				function(){formComplete(impact=0, editText=true)},
 			50);
+			return true;
+		}
+		else if ($(document.body).hasClass('Customize')) {
+			formComplete(impact=getImpact(), editText=true);
+			return true;
+		}
+		else {
+			formComplete();
+			return true;
+		}
 	}
-	else if (arrCheck) {
-		formComplete();
+	else if (useInterval) {
+		formIncomplete();
+		return false;
 	}
 	else {
-		formIncomplete();
+		return false;
 	}
 }
 
@@ -151,7 +163,8 @@ function genSelects(forms) {
 	}
 }
 
-$(document).ready(function() {
+$(document.body).ready(function() {
+	$(document.body).addClass(document.title.split(' - ')[1]);
 	if (document.title.includes('Calculator')) {
 		$('a[href="calculator.html"]').addClass('currentPage');
 		useInterval = true;
@@ -161,8 +174,15 @@ $(document).ready(function() {
 	else if (document.title.includes('Customize')) {
 		$('a[href="customize.html"]').addClass('currentPage');
 		useInterval = false;
+		$(document).on('keyup', '.activity.error', function(x) {
+			elem = $(x.target);
+			if (elem.val() != '') {
+				elem.removeClass('error');
+			}
+		});
 		genSelects('all');
 		fillForm('all');
+		addInputLine();
 	}
 	else if (document.title.includes('Data')) {
 		$('a[href="data.html"]').addClass('currentPage');

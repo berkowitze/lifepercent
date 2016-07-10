@@ -37,7 +37,7 @@ p.activityObject {
 	text-align: left;
 }
 
-.activityTimeValue {
+.activityTime {
 	width: 70px;
 	margin-right: 3px;
 }
@@ -50,9 +50,6 @@ select {
 	font-size: 15px;
 }
 
-.error:focus {
-	border-color: red;
-}
 
 .greenbg {
 	background-color: green;
@@ -83,9 +80,15 @@ p#remaininglabel, p#lifeexpectancy {
 }
 
 input.error:focus {
-    border-color: red;
-    box-shadow: 0 1px 1px red inset, 0 0 8px red;
+    border-color: red !important;
+    box-shadow: 0 1px 1px red inset, 0 0 8px red !important;
     outline: 0 none;
+}
+
+input:focus {
+	border-color: rgb(59, 153, 252);
+	box-shadow: 1px 1px 1px rgb(59, 153, 252) inset, 0 0 8px rgb(59, 153, 252);
+	outline: 0 none;
 }
 
 .infobuttonwrapper {
