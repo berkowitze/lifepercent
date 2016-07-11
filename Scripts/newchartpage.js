@@ -14,6 +14,7 @@ function createInputLine() {
 	timeValueInput.attr('placeholder', '2');
 
 	convertorDropdown = $('<select class="timeConvertor">');
+	convertorDropdown.on('change', ifEnterContinue);
 	convertorDropdown.keydown(ifEnterContinue);
 	option1 = $('<option>');
 	option1.val('60');
@@ -35,32 +36,39 @@ function createInputLine() {
 	return activityObject;
 }
 
-function inputCheck(arg) {
-	//Triggers: activityTime Keyup
+function inputCheck(event) {
 	if (remainingTime() > 0) {
 		$('#addInputLine').prop('disabled', false);
 	}
-	element = $(arg.target);
-	if (element.val() != '' && element.siblings('input').val() != '') {
-		ifEnterContinue(arg);
+	elem = $(event.target);
+	if (elem.val() != '' && elem.siblings('input').val() != '') {
+		ifEnterContinue(event);
 	}
 }
 
 function ifEnterContinue(arg) {
-	if (arg.keyCode != 13) {
-		return;
-	}
 	remainder = remainingTime();
+	enter = arg.keyCode == 13;
 	if (remainder <= 0) {
 		$('#addInputLine').prop('disabled', true);
-		removeOverflow(remainder);
-		if (!$('#generate').prop('disabled')) {
-			generateData();
+		if (enter) {
+			generateLifeTimes();
+		}
+		else {
+			removeLifeTimes();
 		}
 	}
 	else {
-		addInputLine();
+		$('#addInputLine[disabled]').prop('disabled', false);
+		if (enter) {
+			addInputLine();
+		}
+		removeLifeTimes();
 	}
+}
+
+function removeLifeTimes() {
+	$('t').remove();
 }
 
 function removeClick(arg) {
@@ -72,19 +80,6 @@ function removeLine(activity) {
 	if ($('.activity').length == 0) {
 		addInputLine();
 	}
-	//activity.parent().remove();
-	//if ($('.activity').length != 1) {
-	//	try{arg.parentNode.remove();}
-	//	catch(err){arg.path[1].remove();}
-	//}
-	//else {
-	//	clearFirstLine();
-	//}
-	//lineAddedOrRemoved();
-	//activityList = $('.activity');
-	//if (activity[activityList.length-1] == '') {
-	//	selectLast();
-	//}
 }
 
 function remainingTime() {
@@ -96,7 +91,6 @@ function remainingTime() {
 }
 
 function timeDict() {
-	//Triggers: generateData; generateDayData; removeOverflow
 	timeValues = $('.activityTime');
 	timeConvertor = $('.timeConvertor');
 	activityList = $('.activity');
@@ -117,13 +111,30 @@ function timeDict() {
 	});
 }
 
-function generateData() {
+function generateLifeTimes() {
 	clean(remainingTime());
 	removeOverflow(remainingTime());
 	if (remainingTime() != 0) {
 		alert('REMAINING TIME IS NOT ZERO WHY');
 	}
-	console.log('generateData called');
+	remainder = remainingTime();
+	timeList = timeDict();
+	infoList = timeList.map(function(a, b) {
+		timeOfLife = b.timeValue / 1440 * lifeExpectancy;
+		if (timeOfLife > 1) {
+			return timeOfLife.toFixed(2) + ' years of your life.';
+		}
+		else if (timeOfLife * 12 > 1) {
+			return timeOfLife.toFixed(2) * 12 + ' months of your life.';
+		}
+		else {
+			return timeOfLife.toFixed(2) * 365 + ' days of your life.';
+		}
+	});
+	infoList.map(function(a, b) {
+		elem = $('<t class="yearsoflife">').text(b);
+		$('.activity').eq(a).parent().append(elem);
+	});
 }
 
 function clean(remainder) {
