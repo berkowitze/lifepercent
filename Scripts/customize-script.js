@@ -199,9 +199,11 @@ function getImpact() {
 function textEdit(impact) {
 	if (lifeExpectancy == undefined) {
 		text = 'Complete form above to continue.';
+		$('#generate').prop('disabled', true);
 	}
 	else {
 		le = lifeExpectancy.toFixed(2);
+		$('#generate').prop('disabled', false);
 	}
 	if (impact == undefined) {
 		text = 'Your life expectancy is ' + le + ' years.';
