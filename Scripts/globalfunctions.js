@@ -88,6 +88,19 @@ function fillForm(forms) {
 	}));
 }
 
+function focusIncomplete() {
+	$('select').map(function(a, b) {
+		val = $(b).val();
+		if (val == '' || val == 'NaN') {
+			$(b).focus();
+			break;
+		}
+		else {
+			return
+		}
+	});
+}
+
 function changeCheck(arr) {
 	arrCheck = arr.every(Number.isInteger);
 	if (arrCheck) {
@@ -95,20 +108,22 @@ function changeCheck(arr) {
 			interval = setInterval(
 				function(){formComplete(impact=0, editText=true)},
 			50);
-			return true;
 		}
 		else if ($(document.body).hasClass('Customize')) {
 			formComplete(impact=getImpact(), editText=true);
-			return true;
 		}
 		else {
 			formComplete();
-			return true;
 		}
+		return true;
 	}
 	else if (useInterval) {
 		formIncomplete();
 		return false;
+	}
+	else if ($(document.body).hasClass('Customize')) {
+		lifeExpectancy = undefined;
+		textEdit(NaN);
 	}
 	else {
 		return false;
