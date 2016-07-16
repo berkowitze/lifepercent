@@ -72,8 +72,14 @@ function ifEnterContinue(arg) {
 	if (remainder <= 0) {
 		$('#addInputLine').prop('disabled', true);
 		if (enter) {
-			updateRemainingLabel();
-			generateLifeTimes();
+			if (isNaN(lifeExpectancy)) {
+				$('#lifeexpectancy').css('color', 'red');
+				return;
+			}
+			else {
+				updateRemainingLabel();
+				generateLifeTimes();
+			}
 		}
 		else {
 			return
@@ -203,6 +209,7 @@ function textEdit(impact) {
 	}
 	else {
 		le = lifeExpectancy.toFixed(2);
+		$('#lifeexpectancy').css('color', 'darkgrey');
 		$('#generate').prop('disabled', false);
 	}
 	if (impact == undefined) {
