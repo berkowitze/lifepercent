@@ -25,3 +25,148 @@ a#customizeExpectancy {
 	font-size: 65%;
 	text-decoration: none;
 }
+
+/*Copied from Styles/chartpage.css*/
+h4:active {
+	cursor:default;
+}
+button {
+	background-color: #FFF8DC;
+	border-radius: 5px;
+	border: none;
+	outline: none;
+}
+
+button#addInputLine, button#generate {
+	border-radius: 100px;
+	outline: none;
+	border: none;
+	left: 15%;
+	position: absolute;
+	font-size: 15px;
+}
+
+button:hover {
+	cursor: pointer;
+}
+
+p.dataoption {
+	font-size: 15px;
+}
+
+#custominfo {
+	text-align: left;
+}
+
+input#activity_time_value {
+	width: 100%;
+}
+
+p.activityObject {
+	text-align: left;
+}
+
+.activityTime {
+	width: 70px;
+	margin-right: 3px;
+}
+
+.smaller {
+	font-size: 15px;
+}
+
+
+.greenbg {
+	background-color: green;
+}
+
+.redbg {
+	background-color: red;
+	width: 50%;
+	margin-right: 0px;
+}
+
+.removelinebutton {
+	border-radius: 150px;
+	transform: translateY(-2px);
+}
+
+p#remaining, p#lifeexpectancy {
+	font-size:60%;
+	color:darkgrey;
+}
+
+.activity {
+	padding-left: 5px;
+}
+
+.yearsoflife {
+	margin-left: .5em;
+	color: maroon;
+	font-size: 90%;
+}
+
+input.error:focus {
+    border-color: red !important;
+    box-shadow: 0 1px 1px red inset, 0 0 8px red !important;
+    outline: 0 none;
+}
+
+input:focus {
+	border-color: rgb(59, 153, 252);
+	box-shadow: 1px 1px 1px rgb(59, 153, 252) inset, 0 0 8px rgb(59, 153, 252);
+	outline: 0 none;
+}
+
+.infobuttonwrapper {
+	width:18px;
+	height: 18px;
+	background-color: #FFF8DC;
+	/*margin-bottom: 3px;*/
+	font-size: 12px;
+	display:inline-block;
+	margin-bottom: 3px;
+	transform: translate(0px, -3px);
+	margin-left: 4px;
+	border-radius: 300px;
+}
+
+a.infobutton {
+	text-decoration: none;
+	color: blue;
+	vertical-align: middle;
+	text-align: center;
+	padding-left: 7px;
+	padding-right: 7px;
+}
+
+.impactbox {
+	display: inline-block;
+}
+
+.comingsoon {
+	font-size: 70%;
+	display: inline-block;
+	color: darkgrey;
+}
+
+.extrainfo {
+	display: none;
+}
+
+.extrainfodisplay {
+	display: inline;
+	position: absolute;
+	bottom: 25px;
+	width: 180px;
+	right: 30px;
+	height: 50px;
+	background-color: #FFF8DC;
+	opacity: 50%;
+	padding: 7px;
+	border-radius: 20px;
+}
+
+#addInputLine[disabled] {
+	color: red;
+}
