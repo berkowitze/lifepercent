@@ -161,7 +161,7 @@ function generateLifeTimes() {
 	});
 	infoList.map(function(a, b) {
 		elem = $('<t class="yearsoflife">').text(b);
-		$('.activity').eq(a).parent().append(elem);
+		$('.activity').eq(a).parent().html(elem);
 	});
 }
 
