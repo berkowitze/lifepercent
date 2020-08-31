@@ -88,19 +88,6 @@ function fillForm(forms) {
 	}));
 }
 
-function focusIncomplete() {
-	$('select').map(function(a, b) {
-		val = $(b).val();
-		if (val == '' || val == 'NaN') {
-			$(b).focus();
-			break;
-		}
-		else {
-			return
-		}
-	});
-}
-
 function changeCheck(arr) {
 	arrCheck = arr.every(Number.isInteger);
 	if (arrCheck) {
